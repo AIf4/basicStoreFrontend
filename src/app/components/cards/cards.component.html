@@ -1,0 +1,68 @@
+<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" >
+  <li class="shadow-md" *ngFor="let product of products">
+    <a href="#" class="group block overflow-hidden">
+      <img
+        [src]="product.imageurl"
+        alt=""
+        class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[300px]"
+      />
+      <div class="relative bg-white pt-3 px-2">
+
+        <span
+          *ngFor="let tags of product.tags"
+          class="mr-2 inline-flex items-center justify-center rounded-full bg-blue-500 px-2.5 py-0.5 text-blue-100"
+        >
+          <svg
+
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="-ms-1 me-1.5 h-4 w-4"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M7.0498 7.0498H7.0598M10.5118 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V10.5118C3 11.2455 3 11.6124 3.08289 11.9577C3.15638 12.2638 3.27759 12.5564 3.44208 12.8249C3.6276 13.1276 3.88703 13.387 4.40589 13.9059L9.10589 18.6059C10.2939 19.7939 10.888 20.388 11.5729 20.6105C12.1755 20.8063 12.8245 20.8063 13.4271 20.6105C14.112 20.388 14.7061 19.7939 15.8941 18.6059L18.6059 15.8941C19.7939 14.7061 20.388 14.112 20.6105 13.4271C20.8063 12.8245 20.8063 12.1755 20.6105 11.5729C20.388 10.888 19.7939 10.2939 18.6059 9.10589L13.9059 4.40589C13.387 3.88703 13.1276 3.6276 12.8249 3.44208C12.5564 3.27759 12.2638 3.15638 11.9577 3.08289C11.6124 3 11.2455 3 10.5118 3ZM7.5498 7.0498C7.5498 7.32595 7.32595 7.5498 7.0498 7.5498C6.77366 7.5498 6.5498 7.32595 6.5498 7.0498C6.5498 6.77366 6.77366 6.5498 7.0498 6.5498C7.32595 6.5498 7.5498 6.77366 7.5498 7.0498Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+          </svg>
+          {{ tags.name }}
+        </span>
+
+      </div>
+      <div class="relative bg-white py-2 px-4">
+        <span class="text-xs tracking-wider text-gray-900 underline">
+          <small> SKU {{ product.sku }} </small>
+        </span>
+        <br>
+        <span
+          class="text-md font-normal text-w text-gray-700  group-hover:underline-offset-4"
+        >
+          {{ product.name }}
+        </span>
+        <br>
+        <span class="text-lg font-medium mt-0 tracking-wider text-gray-600">
+          {{ product.price | currency:'COP':'$ ':'3.0' }}
+        </span>
+      </div>
+
+    </a>
+  </li>
+</ul>
+<div class="grid pt-60 px-4 bg-white place-content-center" *ngIf="!products">
+  <div class="text-center">
+    <p class="font-black text-gray-200 text-5xl">Sin productos<br> registrados</p>
+    <p class="mt-4 text-gray-500">Empieza a registrar productos.</p>
+  </div>
+</div>

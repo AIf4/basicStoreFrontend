@@ -1,0 +1,71 @@
+<section>
+  <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
+      <div class="h-32 rounded-lg lg:col-span-2">
+        <header>
+          <p class="text-xl font-bold text-gray-900 sm:text-3xl">
+            Colección de productos
+          </p>
+
+          <p class="mt-4 text-gray-500">
+            Explora nuestro catálogo cuidadosamente seleccionado y encuentra
+            productos que se adaptan a tu estilo de vida y necesidades. Ya sea
+            que estés buscando artículos de última generación o clásicos
+            atemporales, tenemos algo para todos.
+          </p>
+        </header>
+      </div>
+      <div
+        class="h-32 rounded-lg mt-4 flex flex-col gap-4 justify-self-end sm:mt-0 sm:flex-row sm:items-center"
+      >
+        <button
+          data-modal-target="authentication-modal"
+          data-modal-toggle="authentication-modal"
+          class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-blue-400 px-5 py-3 text-blue-500 transition hover:bg-blue-700 hover:text-blue-50 focus:outline-none focus:ring"
+          type="button"
+        >
+          <span class="text-sm font-medium"> Registrar Producto </span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8">
+      <div class="hidden space-y-4 lg:block">
+        <!-- Search component -->
+        <app-search />
+        <div>
+          <p class="block text-xs font-medium text-gray-700">Filtros</p>
+
+          <div class="mt-1 space-y-2">
+            <!-- Availability component -->
+            <app-filter-availability />
+            <!-- Price component -->
+            <app-filter-price />
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <app-cards  [products]="products" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal component -->
+<app-modal />
