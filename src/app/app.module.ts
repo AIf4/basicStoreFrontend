@@ -12,7 +12,7 @@ import { FilterAvailabilityComponent } from './components/filter-availability/fi
 import { FilterPriceComponent } from './components/filter-price/filter-price.component';
 import { ProductsService } from './products/services/products.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
@@ -20,6 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchComponent } from './components/search/search.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { PaginateComponent } from './components/paginate/paginate.component';
+import { EditModalComponent } from './components/modal/editModal.component';
 
 /*
 
@@ -39,6 +41,8 @@ import { ModalComponent } from './components/modal/modal.component';
     FilterPriceComponent,
     SearchComponent,
     ModalComponent,
+    EditModalComponent,
+    PaginateComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,8 @@ import { ModalComponent } from './components/modal/modal.component';
     MatChipsModule,
     MatIconModule,
     MatAutocompleteModule,
-    NgFor
+    NgFor,
+    FormsModule
   ],
   providers: [ProductsService],
   bootstrap: [AppComponent],

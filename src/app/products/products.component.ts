@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProductsService } from './services/products.service';
 import { initFlowbite } from 'flowbite';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { ModalComponent } from '../components/modal/modal.component';
 
 @Component({
   selector: 'app-products',
@@ -17,14 +13,17 @@ export class ProductsComponent {
   products: any;
   productForm!: FormGroup;
 
-  constructor(
-    private productsService: ProductsService,
-    private fb: FormBuilder
-  ) {}
+  @ViewChild(ModalComponent) modalComponent!: ModalComponent;
+
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
     this.getAllProducts();
     initFlowbite();
+  }
+
+  setProducts(products: string[]){
+    this.products = products;
   }
 
   getAllProducts(): void {

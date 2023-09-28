@@ -21,16 +21,23 @@ export class ProductsService {
     );
   }
 
-  createProduct(createProduct: any, tags: string[]) {
-    return this.getTagsByName(tags).subscribe((resultTags: any) => {
-      let tagsId = resultTags.map((res: any) => res._id);
-      createProduct.tags = tagsId;
-      console.log(createProduct);
-      this.http
-        .post(`${this.apiUrl}/products`, createProduct)
-        .subscribe((result: any) => console.log(result));
-    });
+  createProduct(createProduct: any) {
+    return this.http
+      .post(`${this.apiUrl}/products`, createProduct)
+      .pipe(map((products: any) => products));
+  }
 
+  getProductsByRangePrice(min: number, max:number) {
+    return this.http
+      .get(`${this.apiUrl}/products/by-price-range/${min}/${max}`)
+      .pipe(map((products: any) => products));
+  }
+
+  getProductsByParams(params: string) {
+    if(!params) return this.getAllProducts();
+    return this.http
+      .get(`${this.apiUrl}/products/by-params/${params}`)
+      .pipe(map((products: any) => products));
   }
 
   getTagProducts() {
@@ -44,12 +51,19 @@ export class ProductsService {
   }
 
   getAllTags() {
-    return this.http.get(`${this.apiUrl}/tags`).pipe(map((tag: any) => tag));
+    return this.http
+      .get(`${this.apiUrl}/tags`)
+      .pipe(map((tag: any) => tag.map((tag: any) => tag.name)));
   }
 
   getTagsByName(tagsNames: string[]) {
     return this.http
       .post(`${this.apiUrl}/tags/by-name`, tagsNames)
-      .pipe(map((tag: any) => tag));
+      .pipe(map((tag: any) => tag.map((res: any) => res._id)));
+  }
+
+  removeProduct(id: string){
+    return this.http
+      .delete(`${this.apiUrl}/products/${id}`);
   }
 }

@@ -19,8 +19,7 @@
         class="h-32 rounded-lg mt-4 flex flex-col gap-4 justify-self-end sm:mt-0 sm:flex-row sm:items-center"
       >
         <button
-          data-modal-target="authentication-modal"
-          data-modal-toggle="authentication-modal"
+          (click)="this.modalComponent.modal.show()"
           class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-blue-400 px-5 py-3 text-blue-500 transition hover:bg-blue-700 hover:text-blue-50 focus:outline-none focus:ring"
           type="button"
         >
@@ -47,25 +46,26 @@
     <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8">
       <div class="hidden space-y-4 lg:block">
         <!-- Search component -->
-        <app-search />
+        <app-search [productsComponent]="this" />
         <div>
           <p class="block text-xs font-medium text-gray-700">Filtros</p>
 
           <div class="mt-1 space-y-2">
             <!-- Availability component -->
-            <app-filter-availability />
+            <!-- <app-filter-availability /> -->
             <!-- Price component -->
-            <app-filter-price />
+            <app-filter-price [productsComponent]="this" />
           </div>
         </div>
       </div>
 
       <div class="lg:col-span-3">
-        <app-cards  [products]="products" />
+        <app-cards  [products]="products" [productsComponent]="this" />
+        <!-- <app-paginate [products]="products"  /> -->
       </div>
     </div>
   </div>
 </section>
 
 <!-- Modal component -->
-<app-modal />
+<app-modal [productsComponent]="this" />

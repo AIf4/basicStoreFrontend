@@ -1,4 +1,4 @@
-<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" >
+<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
   <li class="shadow-md" *ngFor="let product of products">
     <a href="#" class="group block overflow-hidden">
       <img
@@ -7,13 +7,11 @@
         class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[300px]"
       />
       <div class="relative bg-white pt-3 px-2">
-
         <span
           *ngFor="let tags of product.tags"
           class="mr-2 inline-flex items-center justify-center rounded-full bg-blue-500 px-2.5 py-0.5 text-blue-100"
         >
           <svg
-
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -39,30 +37,56 @@
           </svg>
           {{ tags.name }}
         </span>
-
       </div>
       <div class="relative bg-white py-2 px-4">
         <span class="text-xs tracking-wider text-gray-900 underline">
           <small> SKU {{ product.sku }} </small>
         </span>
-        <br>
+        <br />
         <span
-          class="text-md font-normal text-w text-gray-700  group-hover:underline-offset-4"
+          class="text-md font-normal text-w text-gray-700 group-hover:underline-offset-4"
         >
           {{ product.name }}
         </span>
-        <br>
+        <br />
         <span class="text-lg font-medium mt-0 tracking-wider text-gray-600">
-          {{ product.price | currency:'COP':'$ ':'3.0' }}
+          {{ product.price | currency : "COP" : "$ " : "3.0" }}
         </span>
       </div>
-
     </a>
+    <div class="grid grid-cols-1 gap-1 lg:grid-cols-2 ">
+      <div>
+        <button
+          type="button"
+          class="w-full py-2 text-xs font-medium text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          (click)="editProduct(product)"
+        >
+          Editar
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="w-full py-2 text-xs font-medium text-center text-slate-400 bg-slate-300 hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          (click)="deleteProduct(product._id)"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
   </li>
 </ul>
-<div class="grid pt-60 px-4 bg-white place-content-center" *ngIf="!products">
+
+<div
+  class="grid pt-60 px-4 bg-white place-content-center"
+  *ngIf="!products?.length"
+>
   <div class="text-center">
-    <p class="font-black text-gray-200 text-5xl">Sin productos<br> registrados</p>
-    <p class="mt-4 text-gray-500">Empieza a registrar productos.</p>
+    <p class="font-black text-gray-200 text-5xl">
+      No se encontraron<br />
+      productos.
+    </p>
   </div>
 </div>
+
+<app-edit-modal [flatEdit]="flatEdit" [dataEdit]="productEdit"/>
