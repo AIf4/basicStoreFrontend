@@ -37,14 +37,13 @@ export class PaginateComponent {
   }
 
   mostrarProductosDePagina() {
-    console.log("entra")
-    return;
+
     // Calculamos el índice inicial y final de los productos a mostrar en esta página
     this.firstPage = (this.page - 1) * this.productsPerPage;
     this.lastpage =  this.firstPage + this.productsPerPage;
 
     // Obtenemos los productos de la página actual
-    //this.cardsComponent.products = this.products.slice(this.firstPage, this.lastpage);
+
 
 
   }

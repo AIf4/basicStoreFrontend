@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ProductsComponent } from 'src/app/products/products.component';
 import { ProductsService } from 'src/app/products/services/products.service';
 import { ModalComponent } from '../modal/modal.component';
@@ -10,28 +10,14 @@ import { ModalComponent } from '../modal/modal.component';
 })
 export class CardsComponent {
 
-  @Input() products: any[] = [];
   @Input() productsComponent!: ProductsComponent;
-
-  @ViewChild(ModalComponent) modalComponent!: ModalComponent;
-
-  flatEdit!: boolean;
-  productEdit!: {};
-
+  @Input() products: any[] = [];
+  @Output() sentData = new EventEmitter<any>();
 
   constructor(private productsService: ProductsService){}
 
-  ngOnInit() {
-
-  }
-
-  editProduct(produc: []){
-    console.log(produc)
-    this.flatEdit = true;
-    /* this.productsService.editProduct(produc)
-    .subscribe(res => {
-      this.productsComponent.getAllProducts()
-    }) */
+  editProduct(product: {}) {
+    this.sentData.emit(product);
   }
 
   deleteProduct(producId: string){

@@ -21,16 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchComponent } from './components/search/search.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { PaginateComponent } from './components/paginate/paginate.component';
-import { EditModalComponent } from './components/modal/editModal.component';
 
-/*
-
-    MatChipsModule,
-    NgFor,
-    MatIconModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    AsyncPipe, */
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +32,6 @@ import { EditModalComponent } from './components/modal/editModal.component';
     FilterPriceComponent,
     SearchComponent,
     ModalComponent,
-    EditModalComponent,
     PaginateComponent,
   ],
   imports: [

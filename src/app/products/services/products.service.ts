@@ -27,6 +27,13 @@ export class ProductsService {
       .pipe(map((products: any) => products));
   }
 
+  editProduct(editProduct: any, editId: string) {
+    console.log(editProduct)
+    return this.http
+      .patch(`${this.apiUrl}/products/${editId}`, editProduct)
+      .pipe(map((products: any) => products));
+  }
+
   getProductsByRangePrice(min: number, max:number) {
     return this.http
       .get(`${this.apiUrl}/products/by-price-range/${min}/${max}`)
@@ -66,4 +73,6 @@ export class ProductsService {
     return this.http
       .delete(`${this.apiUrl}/products/${id}`);
   }
+
+  saveTransactions(product: string){}
 }

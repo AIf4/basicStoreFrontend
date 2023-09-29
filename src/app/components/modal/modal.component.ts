@@ -4,7 +4,8 @@ import {
   ViewChild,
   inject,
   Input,
-  EventEmitter,
+  SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -30,7 +31,7 @@ import { ProductsComponent } from 'src/app/products/products.component';
   templateUrl: './modal.component.html',
   styleUrls: [],
 })
-export class ModalComponent {
+export class ModalComponent implements OnChanges {
   //
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagsCtrl = new FormControl('');
@@ -49,6 +50,10 @@ export class ModalComponent {
 
   @Input() productsComponent!: ProductsComponent;
 
+  @Input() productEdit!: {};
+
+  editModal: boolean = false;
+  editId: string = '';
 
   modal!: ModalInterface;
 
@@ -59,21 +64,21 @@ export class ModalComponent {
       'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
     closable: false,
     onHide: () => {
-      console.log('modal is hidden');
+      this.editModal = false;
+      this.productsComponent.productEdit = {};
+      this.tags = [];
     },
     onShow: () => {
-      console.log('modal is shown');
-      this.productForm.reset();
+      console.log(this.editModal)
+      if (!this.editModal) {
+        this.productForm.reset();
+      }
     },
-    onToggle: () => {
-      console.log('modal has been toggled');
-    },
+    onToggle: () => {},
   };
 
-
-
   constructor(
-    private fb: FormBuilder,
+    public fb: FormBuilder,
     private productsService: ProductsService
   ) {
     this.filteredTags = this.tagsCtrl.valueChanges.pipe(
@@ -95,9 +100,34 @@ export class ModalComponent {
 
   ngOnInit(): void {}
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      changes['productEdit'].currentValue !==
+      changes['productEdit'].previousValue
+    ) {
+      if(changes['productEdit'].currentValue?.name){
+        this.editModal = true;
+        this.setForm(changes['productEdit'].currentValue);
+      }
+    }
+  }
+
   ngAfterViewInit() {
     this.getAlltags();
     this.modal = new Modal(this.modalElement.nativeElement, this.modalOptions);
+  }
+
+  setForm(dataEdit: any) {
+    this.editId = dataEdit._id;
+    this.tags = dataEdit.tags.map((tag: any) => tag.name);
+    this.productForm = this.fb.group({
+      name: [dataEdit.name, Validators.required],
+      description: [dataEdit.description, Validators.required],
+      sku: [dataEdit.sku, Validators.required],
+      imageurl: [dataEdit.imageurl, Validators.required],
+      price: [dataEdit.price, [Validators.required, Validators.min(0)]],
+      stock: [dataEdit.stock, [Validators.required, Validators.min(0)]],
+    });
   }
 
   createProduct() {
@@ -114,11 +144,18 @@ export class ModalComponent {
           }
         }
       }
-      this.modal.hide();
 
       this.productsService
         .getTagsByName(this.tags)
-        .subscribe((resultTags: any) => this.registerProduct(resultTags));
+        .subscribe((resultTags: any) => {
+          console.log(this.editModal);
+          if (this.editModal) {
+            this.editProduct(resultTags);
+          } else {
+            this.registerProduct(resultTags);
+          }
+          this.modal.hide();
+        });
     }
   }
 
@@ -134,6 +171,15 @@ export class ModalComponent {
     this.productForm.value.tags = tagsId;
     this.productsService
       .createProduct(this.productForm.value)
+      .subscribe((resultTags: any) => {
+        this.productsComponent.getAllProducts();
+      });
+  }
+
+  editProduct(tagsId: any) {
+    this.productForm.value.tags = tagsId;
+    this.productsService
+      .editProduct(this.productForm.value, this.editId)
       .subscribe((resultTags: any) => {
         this.productsComponent.getAllProducts();
       });

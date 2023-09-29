@@ -60,7 +60,11 @@
       </div>
 
       <div class="lg:col-span-3">
-        <app-cards  [products]="products" [productsComponent]="this" />
+        <app-cards
+          [products]="products"
+          [productsComponent]="productsComponent"
+          (sentData)="reciveDataFromCards($event)"
+        />
         <!-- <app-paginate [products]="products"  /> -->
       </div>
     </div>
@@ -68,4 +72,4 @@
 </section>
 
 <!-- Modal component -->
-<app-modal [productsComponent]="this" />
+<app-modal [productsComponent]="this" [productEdit]="productEdit" />

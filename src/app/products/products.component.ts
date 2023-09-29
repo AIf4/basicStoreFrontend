@@ -12,6 +12,9 @@ import { ModalComponent } from '../components/modal/modal.component';
 export class ProductsComponent {
   products: any;
   productForm!: FormGroup;
+  productEdit!: {};
+
+  public productsComponent = this;
 
   @ViewChild(ModalComponent) modalComponent!: ModalComponent;
 
@@ -30,5 +33,12 @@ export class ProductsComponent {
     this.productsService
       .getAllProducts()
       .subscribe((products) => (this.products = products));
+  }
+
+  reciveDataFromCards(productsEdit: {}) {
+    console.log(productsEdit)
+    this.productEdit = productsEdit;
+    this.modalComponent.editModal = true;
+    this.modalComponent.modal.show()
   }
 }
